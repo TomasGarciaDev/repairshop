@@ -56,10 +56,15 @@ export default function TicketForm({
 
   return (
     <div className='flex flex-col gap-1 sm:px-8'>
-      <h2 className='text-2xl font-bold'>
-        {ticket?.id ? "Edit" : "New"} Ticket{" "}
-        {ticket?.id ? `# ${ticket.id}` : "Form"}
-      </h2>
+      <div>
+        <h2 className='text-2xl font-bold'>
+          {ticket?.id && isEditable
+            ? `Edit Ticket # ${ticket.id}`
+            : ticket?.id
+            ? `View Ticket # ${ticket.id}`
+            : "New Ticket Form"}
+        </h2>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(submitForm)}
