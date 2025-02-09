@@ -20,6 +20,10 @@ import {
   type selectCustomerSchemaType,
 } from "@/zod-schema/customer";
 
+import { useAction } from "next-safe-action/hooks";
+import { saveCustomerAction } from "@/app/actions/saveCustomerAction";
+import { useToast } from "@/hooks/use-toast";
+
 type Props = {
   customer?: selectCustomerSchemaType;
 };
@@ -27,6 +31,8 @@ type Props = {
 export default function CustomerForm({ customer }: Props) {
   const { getPermission, isLoading } = useKindeBrowserClient();
   const isManager = !isLoading && getPermission("manager")?.isGranted;
+
+  const { toast } = useToast();
 
   const defaultValues: insertCustomerSchemaType = {
     id: customer?.id ?? 0,
@@ -47,6 +53,28 @@ export default function CustomerForm({ customer }: Props) {
     mode: "onBlur",
     resolver: zodResolver(insertCustomerSchema),
     defaultValues,
+  });
+
+  const {
+    execute: executeSave,
+    result: saveResult,
+    isExecuting: isSaving,
+    reset: resetSaveAction,
+  } = useAction(saveCustomerAction, {
+    onSuccess({ data }) {
+      toast({
+        variant: "default",
+        title: "Success! 🎉",
+        description: data?.message,
+      });
+    },
+    onError({ error }) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Save Failed",
+      });
+    },
   });
 
   async function submitForm(data: insertCustomerSchemaType) {
