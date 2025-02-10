@@ -10,7 +10,7 @@ import { actionClient } from "@/lib/save-action";
 import {
   insertCustomerSchema,
   type insertCustomerSchemaType,
-} from "@/zod-schema/customer";
+} from "@/zod-schemas/customer";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
