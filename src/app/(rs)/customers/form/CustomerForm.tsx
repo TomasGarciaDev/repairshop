@@ -6,8 +6,8 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
 import { InputWithLabel } from "@/components/inputs/InputWithLabel";
-import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
 import { SelectWithLabel } from "@/components/inputs/SelectWithLabel";
+import { TextAreaWithLabel } from "@/components/inputs/TextAreaWithLabel";
 import { CheckboxWithLabel } from "@/components/inputs/CheckboxWithLabel";
 
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
@@ -18,7 +18,7 @@ import {
   insertCustomerSchema,
   type insertCustomerSchemaType,
   type selectCustomerSchemaType,
-} from "@/zod-schema/customer";
+} from "@/zod-schemas/customer";
 
 import { useAction } from "next-safe-action/hooks";
 import { saveCustomerAction } from "@/app/actions/saveCustomerAction";
@@ -60,15 +60,17 @@ export default function CustomerForm({ customer }: Props) {
   const {
     execute: executeSave,
     result: saveResult,
-    isExecuting: isSaving,
+    isPending: isSaving,
     reset: resetSaveAction,
   } = useAction(saveCustomerAction, {
     onSuccess({ data }) {
-      toast({
-        variant: "default",
-        title: "Success! 🎉",
-        description: data?.message,
-      });
+      if (data?.message) {
+        toast({
+          variant: "default",
+          title: "Success! 🎉",
+          description: data.message,
+        });
+      }
     },
     onError({ error }) {
       toast({
@@ -86,10 +88,12 @@ export default function CustomerForm({ customer }: Props) {
   return (
     <div className='flex flex-col gap-1 sm:px-8'>
       <DisplayServerActionResponse result={saveResult} />
-      <h2 className='text-2xl font-bold'>
-        {customer?.id ? "Edit" : "New"} Customer{" "}
-        {customer?.id ? `#${customer.id}` : "Form"}
-      </h2>
+      <div>
+        <h2 className='text-2xl font-bold'>
+          {customer?.id ? "Edit" : "New"} Customer{" "}
+          {customer?.id ? `#${customer.id}` : "Form"}
+        </h2>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(submitForm)}
@@ -170,7 +174,7 @@ export default function CustomerForm({ customer }: Props) {
               >
                 {isSaving ? (
                   <>
-                    <LoaderCircle className='animate-spin' />
+                    <LoaderCircle className='animate-spin' /> Saving
                   </>
                 ) : (
                   "Save"

@@ -14,8 +14,8 @@ import {
   insertTicketSchema,
   type insertTicketSchemaType,
   type selectTicketSchemaType,
-} from "@/zod-schema/ticket";
-import { type selectCustomerSchemaType } from "@/zod-schema/customer";
+} from "@/zod-schemas/ticket";
+import { type selectCustomerSchemaType } from "@/zod-schemas/customer";
 
 type Props = {
   customer: selectCustomerSchemaType;
