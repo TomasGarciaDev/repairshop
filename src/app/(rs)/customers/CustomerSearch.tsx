@@ -4,7 +4,7 @@ import SearchButton from "@/components/SearchButton";
 
 export default function CustomerSearch() {
   return (
-    <Form action='/customers' className='flex grap-2 items-center'>
+    <Form action='/customers' className='flex gap-2 items-center'>
       <Input
         name='searchText'
         type='text'
