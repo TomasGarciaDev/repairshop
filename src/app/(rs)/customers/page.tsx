@@ -15,12 +15,11 @@ export default async function Customers({
   if (!searchText) return <CustomerSearch />;
 
   const results = await getCustomerSearchResults(searchText);
+
   return (
     <>
       <CustomerSearch />
       <p>{JSON.stringify(results)}</p>
     </>
   );
-
-  // return results
 }
