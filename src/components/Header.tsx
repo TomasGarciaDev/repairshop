@@ -24,7 +24,7 @@ export function Header() {
           </Link>
         </div>
         <div className='flex items-center'>
-          <NavButton href='/tickets' label='Ticketse' icon={File} />
+          <NavButton href='/tickets' label='Tickets' icon={File} />
 
           <NavButtonMenu
             icon={UserRound}
