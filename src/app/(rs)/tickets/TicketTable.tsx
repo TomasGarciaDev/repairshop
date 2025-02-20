@@ -34,7 +34,7 @@ import {
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useMemo } from "react";
-import usePolling from "@/hooks/usePolling";
+import { usePolling } from "@/hooks/usePolling";
 import { Button } from "@/components/ui/button";
 import Filter from "@/components/react-table/Filter";
 import { tickets } from "@/db/schema";
