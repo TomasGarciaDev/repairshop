@@ -37,6 +37,7 @@ import { useState, useMemo } from "react";
 import usePolling from "@/hooks/usePolling";
 import { Button } from "@/components/ui/button";
 import Filter from "@/components/react-table/Filter";
+import { tickets } from "@/db/schema";
 
 type Props = {
   data: TickeSearchResultsType;
@@ -56,7 +57,7 @@ export default function TicketTable({ data }: Props) {
     },
   ]);
 
-  usePolling(searchParams.get("searchText"), 10000);
+  usePolling(searchParams.get("searchText"), 300000);
 
   const pageIndex = useMemo(() => {
     const page = searchParams.get("page");
@@ -72,6 +73,14 @@ export default function TicketTable({ data }: Props) {
     "email",
     "completed",
   ];
+
+  const columnWidths = {
+    completed: 150,
+    ticketDate: 150,
+    title: 250,
+    tech: 225,
+    email: 225,
+  };
 
   const columnHelper = createColumnHelper<RowType>();
 
@@ -94,6 +103,8 @@ export default function TicketTable({ data }: Props) {
       },
       {
         id: columnName,
+        size:
+          columnWidths[columnName as keyof typeof columnWidths] ?? undefined,
         header: ({ column }) => {
           return (
             <Button
@@ -168,7 +179,11 @@ export default function TicketTable({ data }: Props) {
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className='bg-secondary p-1'>
+                  <TableHead
+                    key={header.id}
+                    className='bg-secondary p-1'
+                    style={{ width: header.getSize() }}
+                  >
                     <div>
                       {header.isPlaceholder
                         ? null
