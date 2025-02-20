@@ -193,7 +193,12 @@ export default function TicketTable({ data }: Props) {
                           )}
                     </div>
                     {header.column.getCanFilter() ? (
-                      <Filter column={header.column} />
+                      <Filter
+                        column={header.column}
+                        filteredRows={table
+                          .getFilteredRowModel()
+                          .rows.map((row) => row.getValue(header.column.id))}
+                      />
                     ) : null}
                   </TableHead>
                 ))}
