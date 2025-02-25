@@ -30,7 +30,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { MoreHorizontal, TableOfContents } from "lucide-react";
 
@@ -39,8 +38,6 @@ type Props = {
 };
 
 export default function CustomerTable({ data }: Props) {
-  const router = useRouter();
-
   const columnHeadersArray: Array<keyof selectCustomerSchemaType> = [
     "firstName",
     "lastName",
